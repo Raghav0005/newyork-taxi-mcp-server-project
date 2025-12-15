@@ -1,0 +1,4 @@
+data/*.parquet filter=lfs diff=lfs merge=lfs -text
+search_index/MAIN_36k0c72cwvdm1a9c.seg filter=lfs diff=lfs merge=lfs -text
+search_index/MAIN_WRITELOCK filter=lfs diff=lfs merge=lfs -text
+search_index/_MAIN_1.toc filter=lfs diff=lfs merge=lfs -text
