@@ -68,17 +68,6 @@ def query_trips(
     period: Optional[Period] = None,
     limit: int = 20
 ) -> str:
-    """Universal trip query tool with flexible filtering and search.
-    
-    Routing logic:
-    - Uses SEARCH ENGINE (Whoosh): For text-based queries to find relevant examples
-      * When query_text is provided (natural language search)
-      * When location names are given WITHOUT numeric distance filters
-    - Uses PANDAS: For precise numeric filtering and statistics
-      * When distance filters (min/max) are specified
-      * When only numeric filters (fare, hour) without text search
-    """
-    
     # Deterministic routing: Use search for text-based relevance, pandas for numeric precision
     has_text_query = bool(query_text)
     has_location_text = bool(pickup_location or dropoff_location)
