@@ -18,11 +18,11 @@ server.py          # MCP server (Enum-based API)
 
 ## MCP Tools
 
-1. **query_trips** - Search/filter trips (auto-routes to Whoosh or Pandas, as needed)
-2. **analyze_temporal** - Hourly, daily, peak vs off-peak patterns
+1. **query_trips** - Search/filter trips (auto-routes to Whoosh or Pandas)
+2. **analyze_temporal** - Trip volumes by hour, day, peak vs off-peak
 3. **analyze_locations** - Top zones, borough analysis, time-based locations
 4. **analyze_routes** - Popular routes, filtered by criteria
-5. **analyze_fares** - Statistics, taxi type comparison
+5. **analyze_fares** - Statistics, comparison, aggregation by hour/day/period
 6. **get_dataset_info** - Dataset summary + search index stats
 
 **Routing Logic:**

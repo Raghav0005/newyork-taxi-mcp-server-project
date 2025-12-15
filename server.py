@@ -38,6 +38,9 @@ class RouteAnalysis(str, Enum):
 class FareAnalysis(str, Enum):
     STATISTICS = "statistics"
     COMPARE_TYPES = "compare_types"
+    BY_HOUR = "by_hour"
+    BY_DAY = "by_day"
+    BY_PERIOD = "by_period"
 
 mcp = FastMCP("NYC Taxi Analytics")
 
@@ -175,12 +178,18 @@ def analyze_fares(
     
     if analysis_type == FareAnalysis.STATISTICS:
         return tools.get_fare_statistics(df_green, df_yellow, taxi_type.value, period_value, hour)
-    else:
+    elif analysis_type == FareAnalysis.COMPARE_TYPES:
         results = {}
         for metric in ['trip_volume', 'avg_fare', 'avg_distance', 'peak_distribution']:
             comparison = json.loads(tools.compare_taxi_types(df_green, df_yellow, metric))
             results[metric] = comparison
         return json.dumps(results, indent=2)
+    elif analysis_type == FareAnalysis.BY_HOUR:
+        return tools.get_fares_by_hour(df_green, df_yellow, taxi_type.value)
+    elif analysis_type == FareAnalysis.BY_DAY:
+        return tools.get_fares_by_day(df_green, df_yellow, taxi_type.value)
+    else:  # BY_PERIOD
+        return tools.get_fares_by_period(df_green, df_yellow, taxi_type.value)
 
 @mcp.tool()
 def get_dataset_info(include_search_stats: bool = True) -> str:

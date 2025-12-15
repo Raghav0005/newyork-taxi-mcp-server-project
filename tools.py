@@ -149,6 +149,31 @@ def get_fare_statistics(
     
     return json.dumps(results, indent=2)
 
+def _aggregate_fares(df_green, df_yellow, taxi_type, groupby_col):
+    results = {}
+    for tt in _get_taxi_types(taxi_type):
+        df = get_df(df_green, df_yellow, tt)
+        fares = df[(df['fare_amount'] > 0) & (df['fare_amount'] <= 200)]
+        agg = fares.groupby(groupby_col)['fare_amount'].agg(['mean', 'median', 'count'])
+        results[tt] = {
+            (int(k) if isinstance(k, (int, float)) else k): {
+                'avg_fare': round(float(row['mean']), 2),
+                'median_fare': round(float(row['median']), 2),
+                'trip_count': int(row['count'])
+            }
+            for k, row in agg.iterrows()
+        }
+    return json.dumps(results, indent=2)
+
+def get_fares_by_hour(df_green, df_yellow, taxi_type='both'):
+    return _aggregate_fares(df_green, df_yellow, taxi_type, 'hour')
+
+def get_fares_by_day(df_green, df_yellow, taxi_type='both'):
+    return _aggregate_fares(df_green, df_yellow, taxi_type, 'day_of_week')
+
+def get_fares_by_period(df_green, df_yellow, taxi_type='both'):
+    return _aggregate_fares(df_green, df_yellow, taxi_type, 'period')
+
 def get_popular_routes(
     df_green: pd.DataFrame,
     df_yellow: pd.DataFrame,
