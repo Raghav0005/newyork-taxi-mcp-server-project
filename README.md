@@ -16,6 +16,9 @@ server.py          # MCP server (Enum-based API)
 
 `data-insights.ipynb` stores the data munging, cleaning, and visualizations
 
+## Demo Video
+https://drive.google.com/file/d/1jBGgBwkZcW5nB-xIr3tfCN8JaZoxC8YL/view?usp=sharing
+
 ## MCP Tools
 
 1. **query_trips** - Search/filter trips (auto-routes to Whoosh or Pandas)
@@ -36,15 +39,15 @@ pip install pandas pyarrow fastmcp whoosh
 ```
 
 I connected this with the Gemini CLI.
-This required giving the path to the python being used in the environment, as well as the path to the MCP server.
+I gave the path to the Python being used in the environment, as well as the path to the MCP server python file.
 
 After installing the Gemini CLI with Node, update the corresponding `~/.gemini/settings.json` file with:
 
 ```
 "mcpServers": {
     "nyc-taxi": {
-      "command": "/.../envs/cs451/bin/python",
-      "args": ["/.../Desktop/CS451/project/server.py"]
+      "command": "/{Your_Specific_Path}/envs/cs451/bin/python",
+      "args": ["/{Your_Specific_Path}/server.py"]
     }
   }
 ```
