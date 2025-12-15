@@ -31,6 +31,10 @@ class TaxiDataLoader:
                 df_temp = df.merge(zone_cols, left_on=id_col, right_on='LocationID', how='left')
                 df[f'{prefix}_Borough'] = df_temp['Borough']
                 df[f'{prefix}_Zone'] = df_temp['Zone']
+        
+        # Drop trips where pickup and dropoff locations are the same
+        self.df_green = self.df_green[self.df_green['PULocationID'] != self.df_green['DOLocationID']].copy()
+        self.df_yellow = self.df_yellow[self.df_yellow['PULocationID'] != self.df_yellow['DOLocationID']].copy()
     
     def _add_temporal_features(self):
         for df, taxi_type in [(self.df_green, 'green'), (self.df_yellow, 'yellow')]:
